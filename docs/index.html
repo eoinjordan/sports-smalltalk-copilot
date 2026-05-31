@@ -4,85 +4,80 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sports Small Talk Copilot</title>
-  <style>
-    :root {
-      --bg: #0b1220;
-      --panel: #121b2e;
-      --text: #e8eefc;
-      --muted: #b5c2e3;
-      --accent: #34d399;
-      --accent-2: #38bdf8;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(900px 500px at 10% -20%, #1f3b73 0%, transparent 60%),
-        radial-gradient(900px 500px at 90% 120%, #124b40 0%, transparent 60%),
-        var(--bg);
-    }
-    .wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 56px 20px 72px;
-    }
-    .card {
-      background: color-mix(in oklab, var(--panel) 88%, black);
-      border: 1px solid #2b3a5d;
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 18px 40px rgba(0,0,0,.28);
-    }
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(2rem, 4vw, 2.8rem);
-    }
-    p {
-      color: var(--muted);
-      line-height: 1.6;
-      margin: 0 0 16px;
-    }
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 22px;
-    }
-    a.btn {
-      text-decoration: none;
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid #35507f;
-      color: var(--text);
-      background: #172542;
-      font-weight: 600;
-    }
-    a.btn.primary {
-      border-color: transparent;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
-      color: #042018;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="wrap">
-    <section class="card">
-      <h1>Sports Small Talk Copilot</h1>
-      <p>
-        Android app + FastAPI backend for generating useful sports small talk:
-        context-aware openings, safe follow-ups, and quick explanations.
-      </p>
-      <p>
-        Built for people who want enough matchday context to sound natural
-        without pretending to be a pundit.
-      </p>
-      <div class="links">
-        <a class="btn primary" href="https://github.com/eoinjordan/sports-smalltalk-copilot">GitHub Repo</a>
-        <a class="btn" href="https://www.youtube.com/watch?app=desktop&amp;v=ypLoroougRw">Inspiration Clip</a>
+  <div class="scanlines"></div>
+  <header class="topbar">
+    <div class="brand"><span class="badge">42</span> SPORTS SMALL TALK COPILOT</div>
+    <nav>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#generator">Generator</a>
+      <a href="#friendface">Friend Face</a>
+    </nav>
+  </header>
+
+  <main class="layout" id="dashboard">
+    <section class="panel hero">
+      <div>
+        <p class="kicker">Powered by source summaries</p>
+        <h1>Built for IT people. Designed for survival.</h1>
+        <p class="subtitle">Read the sport. Generate a safe line. Escape the conversation before extra time.</p>
+        <button onclick="generateLine()">Generate pub line</button>
+      </div>
+      <div class="pixel-card">
+        <pre class="pixel-face"> ▄▄▄
+█o o█
+█ ▄ █
+▀███▀
+ /|\</pre>
+        <div class="speech">People. What a bunch of bastards.</div>
       </div>
     </section>
+
+    <section class="grid">
+      <article class="panel story-card">
+        <div class="source"><span class="round">42</span> The42 · 2h ago</div>
+        <h2>Dublin edge out Kerry in classic All-Ireland semi-final</h2>
+        <p>Late point seals it at Croke Park.</p>
+        <a class="source-link" href="https://www.the42.ie/" target="_blank" rel="noreferrer">Read on The42.ie ↗</a>
+      </article>
+
+      <article class="panel" id="generator">
+        <h2>Generate your line</h2>
+        <label>Where you are</label>
+        <select id="scene"><option>Pub</option><option>Office Kitchen</option><option>Taxi</option><option>Family Event</option></select>
+        <label>Vibe</label>
+        <select id="tone"><option>Nerdy</option><option>Safe</option><option>Funny</option><option>Confident</option></select>
+        <button onclick="generateLine()">Generate</button>
+        <div class="result" id="result">“Dublin are like a well-written microservice — lots of moving parts, but somehow it all deployed on time.”</div>
+        <div class="actions"><button>Explain it</button><button>Follow up</button><button>Copy</button></div>
+      </article>
+
+      <article class="paper">
+        <h2>Cheat Sheet</h2>
+        <h3>What happened</h3><p>Dublin beat Kerry by a point in a tense semi-final.</p>
+        <h3>Why people care</h3><p>Big rivals. History. Pride. Also, someone in the group chat has strong opinions.</p>
+        <h3>One question to ask</h3><p>“Did you see much of the game?”</p>
+        <h3>Avoid saying</h3><p>Anything that starts with “Back in my day...”</p>
+      </article>
+    </section>
+
+    <section class="panel friendface" id="friendface">
+      <div>
+        <p class="kicker">Friend Face</p>
+        <h2>Your sarcastic sports co-pilot.</h2>
+        <p>I’m not interested in the sporting event itself. I’m interested in the conversation I can use it for.</p>
+      </div>
+      <ul>
+        <li>Knows just enough to be dangerous</li>
+        <li>Hates bandwagon fans</li>
+        <li>Loves a good data analogy</li>
+        <li>May contain irony</li>
+      </ul>
+    </section>
   </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
