@@ -1,6 +1,5 @@
-package com.example.sportssmalltalk.ui
+﻿package com.example.sportssmalltalk.ui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.sportssmalltalk.R
 import com.example.sportssmalltalk.data.SourceFact
 import com.example.sportssmalltalk.ui.theme.InkBlack
 import com.example.sportssmalltalk.ui.theme.MutedText
@@ -116,6 +116,7 @@ fun SportsSmallTalkApp(viewModel: MainViewModel = viewModel()) {
                         facts = demoFacts,
                         onGenerate = viewModel::generate
                     )
+
                     AppScreen.Generator -> GeneratorScreen(
                         sport = state.sport,
                         setting = state.setting,
@@ -128,6 +129,7 @@ fun SportsSmallTalkApp(viewModel: MainViewModel = viewModel()) {
                         onTone = viewModel::setTone,
                         onGenerate = viewModel::generate
                     )
+
                     AppScreen.CheatSheet -> CheatSheetScreen(starter = state.starter)
                     AppScreen.ItCrowd -> ItCrowdScreen(
                         enabled = state.itCrowdMode,
@@ -144,14 +146,18 @@ fun SportsSmallTalkApp(viewModel: MainViewModel = viewModel()) {
 private fun TodayScreen(facts: List<SourceFact>, onGenerate: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
         HeroHeader()
+        MockupHeroCard()
         ChoiceRow(
             label = "Today's sport context",
             options = listOf("GAA", "Rugby", "Football", "Other"),
             selected = "GAA",
             onSelected = {}
         )
-        StoryCard(fact = facts.first(), featured = true)
-        facts.drop(1).forEach { StoryCard(fact = it) }
+        StoryCard(fact = facts.first(), featured = true, imageRes = R.drawable.screen_stories)
+        StoryCard(fact = facts[1], imageRes = R.drawable.screen_today)
+        StoryCard(fact = facts[2], imageRes = R.drawable.screen_generator)
+        StoryCard(fact = facts[3], imageRes = R.drawable.screen_cheatsheet)
+        ScreenSampleRail()
         RetroButton(text = "Generate pub line", modifier = Modifier.fillMaxWidth(), onClick = onGenerate)
         DisclaimerCard()
     }
@@ -166,7 +172,9 @@ private fun HeroHeader() {
             Text("COPILOT", color = TerminalGreen, style = MaterialTheme.typography.headlineLarge)
             Text("Powered by source summaries", color = Color(0xFFFFE7A3), style = MaterialTheme.typography.bodyMedium)
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 14.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 14.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -175,7 +183,7 @@ private fun HeroHeader() {
                 Surface(
                     shape = RoundedCornerShape(10.dp),
                     color = Color(0xFFEED9A5),
-                    border = BorderStroke(1.dp, Color(0xFFB58F4B))
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFB58F4B))
                 ) {
                     Text(
                         "People.\nWhat a bunch of bastards.",
@@ -186,7 +194,7 @@ private fun HeroHeader() {
                 }
             }
             Text(
-                "We’ll help you talk sports so you don’t have to.",
+                "We'll help you talk sports so you don't have to.",
                 modifier = Modifier.padding(top = 16.dp),
                 color = Color(0xFFFFE7A3),
                 style = MaterialTheme.typography.bodyMedium,
@@ -223,6 +231,7 @@ private fun GeneratorScreen(
         if (loading) CircularProgressIndicator(color = TerminalGreen)
         error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium) }
         starter?.let { StarterCard(it) }
+        ScreenSampleRail()
         FriendFacePanel()
     }
 }
@@ -232,6 +241,7 @@ private fun CheatSheetScreen(starter: com.example.sportssmalltalk.data.Conversat
     Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
         Text("Cheat Sheet", color = TerminalGreen, style = MaterialTheme.typography.headlineMedium)
         CheatSheetCard(starter)
+        MockupHeroCard()
         DisclaimerCard()
     }
 }
@@ -260,6 +270,7 @@ private fun ItCrowdScreen(enabled: Boolean, onToggle: () -> Unit, onGenerate: ()
             Text("3. Do not mention xG unless you can define it.", color = MutedText, style = MaterialTheme.typography.bodyMedium)
             Text("4. Leave before someone asks your county.", color = MutedText, style = MaterialTheme.typography.bodyMedium)
         }
+        ScreenSampleRail()
         RetroButton(text = "Give me another line", modifier = Modifier.fillMaxWidth(), onClick = onGenerate)
     }
 }
@@ -283,10 +294,10 @@ private fun BottomNav(selected: AppScreen, onSelected: (AppScreen) -> Unit) {
             ) {
                 Text(
                     text = when (screen) {
-                        AppScreen.Today -> "⌂"
-                        AppScreen.Generator -> "⚡"
-                        AppScreen.CheatSheet -> "▤"
-                        AppScreen.ItCrowd -> "☻"
+                        AppScreen.Today -> "01"
+                        AppScreen.Generator -> "02"
+                        AppScreen.CheatSheet -> "03"
+                        AppScreen.ItCrowd -> "04"
                     },
                     color = if (active) TerminalGreen else MutedText,
                     style = MaterialTheme.typography.titleMedium
@@ -296,12 +307,14 @@ private fun BottomNav(selected: AppScreen, onSelected: (AppScreen) -> Unit) {
                     color = if (active) TerminalGreen else MutedText,
                     style = MaterialTheme.typography.bodySmall
                 )
-                if (active) Spacer(
-                    Modifier
-                        .height(2.dp)
-                        .width(32.dp)
-                        .background(TerminalGreen)
-                )
+                if (active) {
+                    Spacer(
+                        Modifier
+                            .height(2.dp)
+                            .width(32.dp)
+                            .background(TerminalGreen)
+                    )
+                }
             }
         }
     }

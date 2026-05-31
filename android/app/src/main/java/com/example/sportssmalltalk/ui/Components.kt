@@ -1,12 +1,15 @@
-package com.example.sportssmalltalk.ui
+﻿package com.example.sportssmalltalk.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
@@ -16,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -30,9 +34,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.sportssmalltalk.R
 import com.example.sportssmalltalk.data.ConversationStarter
 import com.example.sportssmalltalk.data.SourceFact
 import com.example.sportssmalltalk.ui.theme.MutedText
@@ -50,10 +56,10 @@ fun PixelLogo(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         listOf(
-            " ▄▄▄ ",
-            "█o o█",
-            "█ ▄ █",
-            "▀███▀",
+            " *** ",
+            "*o o*",
+            "* * *",
+            "*****",
             " /|\\ "
         ).forEach { line ->
             Text(line, color = TerminalAmber, style = MaterialTheme.typography.bodySmall)
@@ -122,7 +128,7 @@ fun ChoiceRow(
 fun TerminalCard(
     title: String,
     modifier: Modifier = Modifier,
-    content: @Composable Column.() -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -141,7 +147,7 @@ fun TerminalCard(
 }
 
 @Composable
-fun StoryCard(fact: SourceFact, featured: Boolean = false) {
+fun StoryCard(fact: SourceFact, featured: Boolean = false, imageRes: Int? = null) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
@@ -181,6 +187,16 @@ fun StoryCard(fact: SourceFact, featured: Boolean = false) {
                 color = if (featured) PaperInk else MutedText,
                 style = MaterialTheme.typography.bodyMedium
             )
+            imageRes?.let { resId ->
+                Image(
+                    painter = painterResource(id = resId),
+                    contentDescription = "Sample screenshot for ${fact.title}",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
     }
 }
@@ -188,7 +204,7 @@ fun StoryCard(fact: SourceFact, featured: Boolean = false) {
 @Composable
 fun StarterCard(starter: ConversationStarter) {
     TerminalCard(title = "Today's opening line") {
-        Text("“${starter.opening_line}”", style = MaterialTheme.typography.bodyLarge)
+        Text("\"${starter.opening_line}\"", style = MaterialTheme.typography.bodyLarge)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             SmallAction("Explain it") {}
             SmallAction("Follow up") {}
@@ -274,9 +290,63 @@ fun FriendFacePanel() {
 fun DisclaimerCard() {
     TerminalCard(title = "disclaimer.exe") {
         Text(
-            "This app does not make you a sports expert. It gives you just enough context to nod safely, ask a decent question, and leave before extra time.",
+            "This app does not make you a sports expert. It gives you enough context to ask a decent question and leave before extra time.",
             color = MutedText,
             style = MaterialTheme.typography.bodySmall
         )
+    }
+}
+
+@Composable
+fun MockupHeroCard() {
+    TerminalCard(title = "UI Direction") {
+        Text(
+            "Imported from your sample mockup and screenshots.",
+            color = MutedText,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Image(
+            painter = painterResource(id = R.drawable.ui_mockup),
+            contentDescription = "Composite mockup with app and site direction",
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
+@Composable
+fun ScreenSampleRail() {
+    val samples = listOf(
+        R.drawable.screen_today to "Today",
+        R.drawable.screen_stories to "Stories",
+        R.drawable.screen_generator to "Generator",
+        R.drawable.screen_cheatsheet to "Cheat Sheet"
+    )
+
+    TerminalCard(title = "Sample Screens") {
+        Row(
+            modifier = Modifier.horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            samples.forEach { (resId, title) ->
+                Column(
+                    modifier = Modifier.width(170.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Text(title, color = TerminalGreen, style = MaterialTheme.typography.bodySmall)
+                    Image(
+                        painter = painterResource(id = resId),
+                        contentDescription = "$title screenshot",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))
+                            .border(1.dp, Color(0xFF2A3624), RoundedCornerShape(8.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+        }
     }
 }
