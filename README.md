@@ -1,8 +1,21 @@
 # Sports Small Talk Copilot
 
+[![Pages](https://github.com/eoinjordan/sports-smalltalk-copilot/actions/workflows/pages.yml/badge.svg)](https://github.com/eoinjordan/sports-smalltalk-copilot/actions/workflows/pages.yml)
+[![Android APK](https://github.com/eoinjordan/sports-smalltalk-copilot/actions/workflows/android-apk.yml/badge.svg)](https://github.com/eoinjordan/sports-smalltalk-copilot/actions/workflows/android-apk.yml)
+[![Release Assets](https://github.com/eoinjordan/sports-smalltalk-copilot/actions/workflows/release-assets.yml/badge.svg)](https://github.com/eoinjordan/sports-smalltalk-copilot/actions/workflows/release-assets.yml)
+
 A retro terminal Android app and companion web mockup for technical people who want enough sports context to survive a pub, office, taxi, or family conversation without pretending to be a pundit.
 
 The UI direction is deliberately fun: dark CRT styling, amber/green terminal colours, paper cheat sheets, bottom navigation, and light UK IT-sitcom references. It does not ship copyrighted images, logos, or character assets.
+
+## Live and Build Links
+
+- Live site (GitHub Pages): https://eoinjordan.github.io/sports-smalltalk-copilot/
+- Actions dashboard: https://github.com/eoinjordan/sports-smalltalk-copilot/actions
+- Latest release: https://github.com/eoinjordan/sports-smalltalk-copilot/releases/latest
+- Release assets include:
+  - APK (from Android APK workflow on release publish)
+  - `web-site.zip`, `docs-site.zip`, `screenshots.zip`, `android-ui-assets.zip`, `SHA256SUMS.txt`
 
 ## What is included
 
