@@ -1,32 +1,37 @@
 # Sports Small Talk Copilot
 
-An IT-Crowd-inspired Android app concept for technical people who want enough sports context to survive a pub, office, taxi, or family conversation without pretending to be a pundit.
+A retro terminal Android app and companion web mockup for technical people who want enough sports context to survive a pub, office, taxi, or family conversation without pretending to be a pundit.
 
-Inspired by the "Are We Not Men?" episode (Season 3, Episode 2) of *The IT Crowd* and the legendary [Bluffball.co.uk](https://www.youtube.com/watch?v=f27IqVo5-Oc) website.
+The UI direction is deliberately fun: dark CRT styling, amber/green terminal colours, paper cheat sheets, bottom navigation, and light UK IT-sitcom references. It does not ship copyrighted images, logos, or character assets.
 
-> "The thing about Arsenal is, they always try to walk it in!"
+## What is included
 
-The app has two parts:
+- `android/` — Kotlin + Jetpack Compose Android app
+- `backend/` — FastAPI service that normalises sports source facts and generates conversation starters
+- `web/` — static landing/dashboard mockup matching the Android visual language
+- `docs/mockups/first-ui-direction.png` — the first visual mockup used as the design target
 
-- `android/` — Kotlin + Jetpack Compose Android client
-- `backend/` — FastAPI service that normalises sports headlines/facts and generates conversation starters with an LLM-compatible prompt
+## App features
 
-The default backend uses mock Irish sports data. Add approved feeds, APIs, or manually curated source URLs before production use. Do not scrape full copyrighted articles. Store titles, source URLs, timestamps, and short factual summaries only.
-
-## Features
-
+- Retro terminal/CRT visual system
+- Bottom navigation:
+  - Today
+  - Generator
+  - Cheat Sheet
+  - IT Mode
 - Sport categories: GAA, Rugby, Football, Other
 - Context modes: Pub, Office Kitchen, Taxi, Family Event
 - Tone modes: Safe, Funny, Nerdy, Confident
-- Conversation cards:
+- Generated output:
   - opening line
   - IT analogy
-  - 30-second explanation
+  - 30-second explainer
   - safe follow-up question
   - avoid saying
-- Source-aware output generation
+- Friend Face-adjacent / IT Crowd-inspired humour layer
+- Source-aware backend output
 - Mock backend with deterministic fallback
-- Optional OpenAI-compatible API support via environment variables
+- Optional OpenAI-compatible API support
 
 ## Repo structure
 
@@ -58,9 +63,14 @@ sports-smalltalk-copilot/
 │   │   └── prompt_templates.py
 │   ├── requirements.txt
 │   └── .env.example
+├── web/
+│   ├── index.html
+│   ├── styles.css
+│   └── script.js
 └── docs/
     ├── product-plan.md
-    └── legal-and-data-notes.md
+    ├── legal-and-data-notes.md
+    └── mockups/first-ui-direction.png
 ```
 
 ## Run the backend
@@ -83,19 +93,6 @@ curl -X POST http://localhost:8000/generate \
   -d '{"sport":"GAA","setting":"Pub","tone":"Nerdy"}'
 ```
 
-## Optional LLM configuration
-
-The backend works without a remote LLM. To use an OpenAI-compatible endpoint:
-
-```bash
-export LLM_PROVIDER=openai_compatible
-export LLM_BASE_URL=https://api.openai.com/v1
-export LLM_API_KEY=YOUR_KEY
-export LLM_MODEL=gpt-4.1-mini
-```
-
-For local models, point `LLM_BASE_URL` at an OpenAI-compatible server such as LM Studio, Ollama with OpenAI compatibility, vLLM, or llama.cpp server.
-
 ## Run the Android app
 
 Open `android/` in Android Studio.
@@ -112,24 +109,57 @@ For a physical phone on the same Wi-Fi, change `BASE_URL` in:
 android/app/src/main/java/com/example/sportssmalltalk/data/SportsApi.kt
 ```
 
-to your laptop IP address, for example:
+Example:
 
 ```kotlin
 private const val BASE_URL = "http://192.168.1.50:8000"
 ```
 
-## Production notes
+## Run the web mockup
 
-- Add attribution and source links in the UI.
-- Do not copy full article text.
-- Prefer APIs/RSS/licensed feeds/manual editorial snippets.
-- Never generate fake scores, quotes, fixtures, injuries, or stats.
-- Add a visible disclaimer: “Generated from source summaries. Check linked sources for full context.”
+No build step is required:
 
-## Suggested app name options
+```bash
+cd web
+python3 -m http.server 5173
+```
 
-- Sports Small Talk Copilot
-- Pub Context Compiler
-- Matchday Debugger
-- The Banter Stack
-- SmallTalk FC
+Open:
+
+```text
+http://localhost:5173
+```
+
+## Optional LLM configuration
+
+The backend works without a remote LLM. To use an OpenAI-compatible endpoint:
+
+```bash
+export LLM_PROVIDER=openai_compatible
+export LLM_BASE_URL=https://api.openai.com/v1
+export LLM_API_KEY=YOUR_KEY
+export LLM_MODEL=gpt-4.1-mini
+```
+
+For local models, point `LLM_BASE_URL` at an OpenAI-compatible server such as LM Studio, Ollama with OpenAI compatibility, vLLM, or llama.cpp server.
+
+## Data and legal notes
+
+Do not scrape or redistribute full publisher articles. Keep production source records limited to:
+
+- title
+- source name
+- source URL
+- publication timestamp
+- short factual summary
+- category/sport
+
+Every generated card should show source names and links. Add a visible disclaimer in production:
+
+```text
+Generated from source summaries. Check linked sources for full context.
+```
+
+## Design note
+
+The app can reference UK IT-sitcom culture as parody/inspiration, but avoid using official logos, stills, actor likenesses, or copied assets. Keep it as a retro terminal comedy product with original pixel art and original copy.

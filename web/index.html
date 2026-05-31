@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sports Small Talk Copilot</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="scanlines"></div>
+  <header class="topbar">
+    <div class="brand"><span class="badge">42</span> SPORTS SMALL TALK COPILOT</div>
+    <nav>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#generator">Generator</a>
+      <a href="#friendface">Friend Face</a>
+    </nav>
+  </header>
+
+  <main class="layout" id="dashboard">
+    <section class="panel hero">
+      <div>
+        <p class="kicker">Powered by source summaries</p>
+        <h1>Built for IT people. Designed for survival.</h1>
+        <p class="subtitle">Read the sport. Generate a safe line. Escape the conversation before extra time.</p>
+        <button onclick="generateLine()">Generate pub line</button>
+      </div>
+      <div class="pixel-card">
+        <pre class="pixel-face"> ▄▄▄
+█o o█
+█ ▄ █
+▀███▀
+ /|\</pre>
+        <div class="speech">People. What a bunch of bastards.</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel story-card">
+        <div class="source"><span class="round">42</span> The42 · 2h ago</div>
+        <h2>Dublin edge out Kerry in classic All-Ireland semi-final</h2>
+        <p>Late point seals it at Croke Park.</p>
+        <a class="source-link" href="https://www.the42.ie/" target="_blank" rel="noreferrer">Read on The42.ie ↗</a>
+      </article>
+
+      <article class="panel" id="generator">
+        <h2>Generate your line</h2>
+        <label>Where you are</label>
+        <select id="scene"><option>Pub</option><option>Office Kitchen</option><option>Taxi</option><option>Family Event</option></select>
+        <label>Vibe</label>
+        <select id="tone"><option>Nerdy</option><option>Safe</option><option>Funny</option><option>Confident</option></select>
+        <button onclick="generateLine()">Generate</button>
+        <div class="result" id="result">“Dublin are like a well-written microservice — lots of moving parts, but somehow it all deployed on time.”</div>
+        <div class="actions"><button>Explain it</button><button>Follow up</button><button>Copy</button></div>
+      </article>
+
+      <article class="paper">
+        <h2>Cheat Sheet</h2>
+        <h3>What happened</h3><p>Dublin beat Kerry by a point in a tense semi-final.</p>
+        <h3>Why people care</h3><p>Big rivals. History. Pride. Also, someone in the group chat has strong opinions.</p>
+        <h3>One question to ask</h3><p>“Did you see much of the game?”</p>
+        <h3>Avoid saying</h3><p>Anything that starts with “Back in my day...”</p>
+      </article>
+    </section>
+
+    <section class="panel friendface" id="friendface">
+      <div>
+        <p class="kicker">Friend Face</p>
+        <h2>Your sarcastic sports co-pilot.</h2>
+        <p>I’m not interested in the sporting event itself. I’m interested in the conversation I can use it for.</p>
+      </div>
+      <ul>
+        <li>Knows just enough to be dangerous</li>
+        <li>Hates bandwagon fans</li>
+        <li>Loves a good data analogy</li>
+        <li>May contain irony</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
