@@ -40,6 +40,17 @@ jobs:
           name: app-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
 
+      - name: Publish APK to rolling release
+        if: github.event_name != 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest-apk
+          name: Latest APK (main)
+          body: |
+            Automated debug APK from `main`.
+            Commit: `${{ github.sha }}`
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+
       - name: Upload APK to release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
