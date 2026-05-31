@@ -130,6 +130,19 @@ Open:
 http://localhost:5173
 ```
 
+## Screenshots
+
+### UI Direction Mockup
+
+![UI direction mockup](screenshots/mockup.png)
+
+### Android App Screens
+
+![Android home screen](screenshots/Screenshot_20260531-205225_com.example.sportssmalltalk.png)
+![Android stories screen](screenshots/Screenshot_20260531-205234_com.example.sportssmalltalk.png)
+![Android generator screen](screenshots/Screenshot_20260531-205236_com.example.sportssmalltalk.png)
+![Android cheat sheet screen](screenshots/Screenshot_20260531-205238_com.example.sportssmalltalk.png)
+
 ## Optional LLM configuration
 
 The backend works without a remote LLM. To use an OpenAI-compatible endpoint:
